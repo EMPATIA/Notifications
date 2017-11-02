@@ -1,0 +1,1420 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Notify Module",
+        "contact": {
+            "email": "pvalente@onesource.pt"
+        },
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/emailGroup/{email_group_key}": {
+            "get": {
+                "tags": [
+                    "Email Group"
+                ],
+                "summary": "Show a Email Group",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email_group_key",
+                        "in": "path",
+                        "description": "Email Group Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show the Email Group data",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Group not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Email Group"
+                ],
+                "summary": "Update an Email Group",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Email Group Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupCreate"
+                        }
+                    },
+                    {
+                        "name": "email_group_key",
+                        "in": "path",
+                        "description": "Email Group Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The updated Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Group not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Email Group"
+                ],
+                "summary": "Delete an Email Group",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email_group_key",
+                        "in": "path",
+                        "description": "Email Group Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupDeleteReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Group not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/emailGroup": {
+            "post": {
+                "tags": [
+                    "Email Group"
+                ],
+                "summary": "Create a Email Group",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "EmailGroup",
+                        "in": "body",
+                        "description": "Email Group Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupCreate"
+                        }
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "the newly created Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Group not found",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to store Email Group",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/emailTemplate/{email_template_key}": {
+            "get": {
+                "tags": [
+                    "Email Template"
+                ],
+                "summary": "Show a Email Template",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email_template_key",
+                        "in": "path",
+                        "description": "Email Template Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE",
+                        "in": "header",
+                        "description": "User Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE-DEFAULT",
+                        "in": "header",
+                        "description": "Entity default Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show the Email Template data",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Email Template"
+                ],
+                "summary": "Update an Email Template",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Email Template Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateCreate"
+                        }
+                    },
+                    {
+                        "name": "email_template_key",
+                        "in": "path",
+                        "description": "Email Template Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The updated Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailGroupReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Email Template"
+                ],
+                "summary": "Delete an Email Template",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email_template_key",
+                        "in": "path",
+                        "description": "Email Template Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateDeleteReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/emailTemplate": {
+            "post": {
+                "tags": [
+                    "Email Template"
+                ],
+                "summary": "Create an Email Template",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Email Template Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateCreate"
+                        }
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "the newly created Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not found",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to store Email Template",
+                        "schema": {
+                            "$ref": "#/definitions/emailTemplateErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/send/{email_template_key}": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Send an Email given a template",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Email Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailCreate"
+                        }
+                    },
+                    {
+                        "name": "email_template_key",
+                        "in": "path",
+                        "description": "Email Template Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE",
+                        "in": "header",
+                        "description": "User Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE-DEFAULT",
+                        "in": "header",
+                        "description": "Entity default Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Email Sent",
+                        "schema": {
+                            "$ref": "#/definitions/emailReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to send Email",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/emailSend/{type_code}": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Send an Email given a type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Email Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emailCreate"
+                        }
+                    },
+                    {
+                        "name": "type_code",
+                        "in": "path",
+                        "description": "Type Code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-SITE-KEY",
+                        "in": "header",
+                        "description": "Site Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE",
+                        "in": "header",
+                        "description": "User Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE-DEFAULT",
+                        "in": "header",
+                        "description": "Entity default Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Email Sent",
+                        "schema": {
+                            "$ref": "#/definitions/emailReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Email Template not Found",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to send Email",
+                        "schema": {
+                            "$ref": "#/definitions/emailErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/type/{type_key}": {
+            "get": {
+                "tags": [
+                    "Type"
+                ],
+                "summary": "Show a Type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type_key",
+                        "in": "path",
+                        "description": "Type Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE",
+                        "in": "header",
+                        "description": "User Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "LANG-CODE-DEFAULT",
+                        "in": "header",
+                        "description": "Entity default Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show the Type data",
+                        "schema": {
+                            "$ref": "#/definitions/typeReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Type not Found",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Type"
+                ],
+                "summary": "Update a Type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Type Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/typeCreate"
+                        }
+                    },
+                    {
+                        "name": "type_key",
+                        "in": "path",
+                        "description": "Type Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The updated Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Type not Found",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Type"
+                ],
+                "summary": "Delete an Type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type_key",
+                        "in": "path",
+                        "description": "Type Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/typeDeleteReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Type not Found",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "/type": {
+            "post": {
+                "tags": [
+                    "Type"
+                ],
+                "summary": "Create a Type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": "Type Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/typeCreate"
+                        }
+                    },
+                    {
+                        "name": "X-AUTH-TOKEN",
+                        "in": "header",
+                        "description": "User Auth Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-MODULE-TOKEN",
+                        "in": "header",
+                        "description": "Module Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "the newly created Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeReply"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "404": {
+                        "description": "Type not found",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to store Type",
+                        "schema": {
+                            "$ref": "#/definitions/typeErrorDefault"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "emailGroupErrorDefault": {
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "emailGroupCreate": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "site_key"
+                    ],
+                    "properties": {
+                        "site_key": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "emailGroupReply": {
+            "type": "object",
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "email_group_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "site_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "created_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "updated_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "deleted_at": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                }
+            ]
+        },
+        "emailGroupDeleteReply": {
+            "properties": {
+                "string": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "emailTemplateErrorDefault": {
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "emailTemplateTranslations": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "language_code",
+                        "subject",
+                        "header",
+                        "content",
+                        "footer"
+                    ],
+                    "properties": {
+                        "language_code": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "subject": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "header": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "content": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "footer": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "emailTemplateCreate": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "type_key",
+                        "translations"
+                    ],
+                    "properties": {
+                        "type_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "site_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "translations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emailTemplateTranslations"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "emailTemplateReply": {
+            "type": "object",
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "email_template_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "type_id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "email_group_id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "subject": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "header": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "content": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "footer": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "type": {
+                            "type": "object",
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/typeReply"
+                                }
+                            ]
+                        },
+                        "site_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "created_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "updated_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "deleted_at": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                }
+            ]
+        },
+        "emailTemplateDeleteReply": {
+            "properties": {
+                "string": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "emailErrorDefault": {
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "emailCreate": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "recipient",
+                        "content"
+                    ],
+                    "properties": {
+                        "user_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "recipient": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "content": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "no_reply": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "sender_name": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "emailReply": {
+            "type": "object",
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "email_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "module_token": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "sent": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "recipient": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "content": {
+                            "type": "string",
+                            "format": "array"
+                        },
+                        "created_by": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "updated_by": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "created_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "updated_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "deleted_at": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                }
+            ]
+        },
+        "typeErrorDefault": {
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "typeTranslations": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "language_code",
+                        "subject",
+                        "header",
+                        "content",
+                        "footer"
+                    ],
+                    "properties": {
+                        "language_code": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "name": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "subject": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "header": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "content": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "footer": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "typeCreate": {
+            "type": "object",
+            "allOf": [
+                {
+                    "required": [
+                        "code",
+                        "translations"
+                    ],
+                    "properties": {
+                        "code": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "translations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/typeTranslations"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "typeReply": {
+            "type": "object",
+            "allOf": [
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "format": "integer"
+                        },
+                        "type_key": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "code": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "name": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "created_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "updated_at": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "deleted_at": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                }
+            ]
+        },
+        "typeDeleteReply": {
+            "properties": {
+                "string": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Email Group",
+            "description": "Everything about Email Groups"
+        },
+        {
+            "name": "Email Template",
+            "description": "Everything about Email Templates"
+        },
+        {
+            "name": "Email",
+            "description": "Everything about Email"
+        },
+        {
+            "name": "Type",
+            "description": "Everything about Types"
+        }
+    ]
+}

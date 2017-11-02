@@ -1,0 +1,16 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "empatia-dev.onesource.pt",
+  "port": "22",
+  "target": "/home/andreiasanta/notify",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "andreiasanta",
+  "password": "QA09pok",
+  "watch": [],
+  "transport": "scp"
+}
