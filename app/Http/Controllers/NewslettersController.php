@@ -12,7 +12,7 @@ use App\Type;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-
+use App\ComModules\EMPATIA;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -49,6 +49,21 @@ class NewslettersController extends Controller {
                 ->skip($tableData['start'])
                 ->take($tableData['length'])
                 ->get();
+
+
+            //get all users (name and key)
+            $users = EMPATIA::getUsers();
+            
+            //replace the user_key with the name
+            if(isset($users) && count($users) >0){
+                foreach ($newsletters as $newsletter) {
+                    foreach($users as $userKey =>  $userName) {
+                        if(strcmp($newsletter->created_by,$userKey) == 0) {
+                            $newsletter->created_by = $userName;
+                        }
+                    }
+                }
+            }
 
             $data['newsletters'] = $newsletters;
             $data['recordsTotal'] = $recordsTotal;

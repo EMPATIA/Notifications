@@ -515,6 +515,135 @@ class EmailsController extends Controller
         }
     }
 
+    public function getCountTotalSentEmails(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalSentEmails = Email::whereEntityKey($entityKey)
+                ->where('sent', '=' ,'1')->count();
+
+            return response()->json($totalSentEmails, 200);
+
+        } catch (QueryException $e) {
+            return response()->json(['error' => 'Failed to get Entity Emails'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Emails not Found'], 404);
+        }
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function getCountTotalSentEmails30DPersonalized(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalEmails= Email::whereEntityKey($entityKey)
+                ->selectRaw('count(created_at) as total_sent_emails, DAY(created_at) as day, MONTH(created_at) as month, YEAR(created_at) as year') // use your field for count
+                ->whereDate('created_at', '>=' ,$request->startDate)
+                ->whereDate('created_at', '<=', $request->endDate)
+                ->where('sent', '=' ,'1')
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->get();
+
+            return response()->json($totalEmails, 200);
+
+        } catch (QueryException $e) {
+//            print_r($e);
+            return response()->json(['error' => 'Failed to get Entity Sms'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Sms not Found'], 404);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function getCountTotalNotSentEmails(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalNotSentEmails = Email::whereEntityKey($entityKey)
+                ->where('sent', '=' ,'0')->count();
+
+            return response()->json($totalNotSentEmails, 200);
+
+        } catch (QueryException $e) {
+            return response()->json(['error' => 'Failed to get Entity Emails'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Emails not Found'], 404);
+        }
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function getCountTotalNotSentEmails30DPersonalized(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalNotSentEmails= Email::whereEntityKey($entityKey)
+                ->selectRaw('count(created_at) as total_not_sent_emails, DAY(created_at) as day, MONTH(created_at) as month, YEAR(created_at) as year') // use your field for count
+                ->whereDate('created_at', '>=' ,$request->startDate)
+                ->whereDate('created_at', '<=', $request->endDate)
+                ->where('sent', '=' ,'0')
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->get();
+
+            return response()->json($totalNotSentEmails, 200);
+
+        } catch (QueryException $e) {
+//            print_r($e);
+            return response()->json(['error' => 'Failed to get Entity Sms'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Sms not Found'], 404);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function getCountTotalMailsErrors(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalErrorsEmails = Email::whereEntityKey($entityKey)
+                ->where('errors', '!=' ,'0')->count();
+
+            return response()->json($totalErrorsEmails, 200);
+
+        } catch (QueryException $e) {
+            return response()->json(['error' => 'Failed to get Entity Emails'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Emails not Found'], 404);
+        }
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function getCountTotalEmailsErrors30DPersonalized(Request $request){
+        ONE::verifyToken($request);
+
+        try{
+            $entityKey = $request->header('X-ENTITY-KEY');
+            $totalEmailsErrors= Email::whereEntityKey($entityKey)
+                ->selectRaw('count(created_at) as total_emails_errors, DAY(created_at) as day, MONTH(created_at) as month, YEAR(created_at) as year') // use your field for count
+                ->whereDate('created_at', '>=' ,$request->startDate)
+                ->whereDate('created_at', '<=', $request->endDate)
+                ->where('errors', '!=' ,'0')
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->get();
+
+            return response()->json($totalEmailsErrors, 200);
+
+        } catch (QueryException $e) {
+//            print_r($e);
+            return response()->json(['error' => 'Failed to get Entity Emails'], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Emails not Found'], 404);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -537,6 +666,7 @@ class EmailsController extends Controller
             if(!empty($tableData['search']['value'])) {
                 $query = $query
                     ->where('recipient', 'like', '%'.$tableData['search']['value'].'%')
+                    ->orWhere('subject', 'like', '%'.$tableData['search']['value'].'%')
                     ->orWhere('created_by', 'like', '%'.$tableData['search']['value'].'%')
                     ->orWhere('created_at', 'like', '%'.$tableData['search']['value'].'%');
             }
@@ -655,13 +785,13 @@ class EmailsController extends Controller
      *
      */
     public static function sendFailedEmails() {
-        $failedEmails = Email::whereEntityKey('bhDlS9uuMdWcm1YINEupAK7GzQVAtT9C')->whereSent(false)->get()->take(30);
+        $failedEmails = Email::whereSent(false)->get()->take(30); // $failedEmails = Email::whereEntityKey('bhDlS9uuMdWcm1YINEupAK7GzQVAtT9C')->whereSent(false)->get()->take(30);
 
         foreach ($failedEmails as $failedEmail){
             $emailMessage['to'] = $failedEmail['recipient'];
-            $emailMessage['no_reply'] = 'no-reply@buergerbudget.wuppertal.de';
-            $emailMessage['sender_name'] = 'Bürgerbudget Wuppertal';
-            $emailMessage['subject'] = 'Bürgerbudget Wuppertal: Neue Nachricht';
+            $emailMessage['no_reply'] = $failedEmail['sender_email'];
+            $emailMessage['sender_name'] = $failedEmail['sender_name'];
+            $emailMessage['subject'] = $failedEmail['subject'];
             $emailMessage['content'] = html_entity_decode($failedEmail['content']);
 
             Mail::send(
@@ -684,11 +814,11 @@ class EmailsController extends Controller
                     $headers->addTextHeader('Reply-To', $emailMessage['no_reply']);
                 });
             if (count(Mail::failures()) > 0){
-                \Log::info("WUPPERTAL EMAIL:".'ERROR');
+                \Log::info("EMAIL:".'ERROR');
             }else{
                 $failedEmail->sent = 1;
                 $failedEmail->save();
-                \Log::info("WUPPERTAL EMAIL:".'OK');
+                \Log::info("EMAIL:".'OK');
             }
 
         }

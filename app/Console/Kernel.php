@@ -3,6 +3,7 @@
 namespace App\Console;
 use App\ComModules\Performance;
 use App\Http\Controllers\EmailsController;
+use App\Http\Controllers\ReceivedSMSController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -37,8 +38,14 @@ class Kernel extends ConsoleKernel
 //            EmailsController::sendFailedEmails();
 //        })->everyMinute();
 
-        $schedule->call (function (){
+        /* Send Email Queue */
+        $schedule->call(function (){
             EmailsController::sendEmails();
+        })->everyMinute();
+
+        /* Process Received SMSs */
+        $schedule->call(function (){
+            ReceivedSMSController::processSMS();
         })->everyMinute();
     }
 }

@@ -3,4 +3,4 @@ Homestead.yaml
 Homestead.json
 .env
 .idea/
-node_modules/
+.vscode/
